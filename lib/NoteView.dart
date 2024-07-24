@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes/EditNoteView.dart';
-import 'package:google_keep_notes/colors.dart';
+import 'package:google_keep_notes/Colors.dart';
 
 class NoteView extends StatefulWidget {
   const NoteView({super.key});
