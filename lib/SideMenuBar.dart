@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_keep_notes/Settings.dart';
 import 'package:google_keep_notes/colors.dart';
 
 class SideMenu extends StatefulWidget {
@@ -123,7 +124,10 @@ class _SideMenuState extends State<SideMenu> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(50),
                           bottomRight: Radius.circular(50))))),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Settings()));
+          },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             child: Row(
