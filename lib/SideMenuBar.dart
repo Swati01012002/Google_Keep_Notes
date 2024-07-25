@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_keep_notes/ArchiveView.dart';
+import 'package:google_keep_notes/Home.dart';
 import 'package:google_keep_notes/Settings.dart';
 import 'package:google_keep_notes/colors.dart';
 
@@ -58,7 +60,10 @@ class _SideMenuState extends State<SideMenu> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(50),
                           bottomRight: Radius.circular(50))))),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Home()));
+          },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             child: Row(
@@ -91,7 +96,10 @@ class _SideMenuState extends State<SideMenu> {
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(50),
                           bottomRight: Radius.circular(50))))),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ArchiveView()));
+          },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             child: Row(

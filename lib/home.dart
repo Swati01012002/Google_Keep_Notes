@@ -1,14 +1,12 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_keep_notes/EditNoteView.dart';
 import 'package:google_keep_notes/CreateNoteView.dart';
 import 'package:google_keep_notes/NoteView.dart';
 import 'package:google_keep_notes/SearchPage.dart';
 import 'package:google_keep_notes/SideMenuBar.dart';
 import 'package:google_keep_notes/colors.dart';
+import 'package:google_keep_notes/model/MyNoteModel.dart';
+import 'package:google_keep_notes/services/db.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,6 +20,32 @@ class _HomeState extends State<Home> {
   String note =
       "THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE ";
   String note1 = "THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future createEntry(Note note) async {
+    await NotesDatabase.instance.InsertEntry(note);
+  }
+
+  Future getAllNotes() async {
+    await NotesDatabase.instance.readAllNotes();
+  }
+
+  Future getOneNote(int id) async {
+    await NotesDatabase.instance.readOneNote(id);
+  }
+
+  Future updateOneNote(Note note) async {
+    await NotesDatabase.instance.updateNote(note);
+  }
+
+  Future deleteNote(Note note) async {
+    await NotesDatabase.instance.deleteNote(note);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,10 +1,11 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_keep_notes/EditNoteView.dart';
 import 'package:google_keep_notes/CreateNoteView.dart';
 import 'package:google_keep_notes/NoteView.dart';
+import 'package:google_keep_notes/SearchPage.dart';
 import 'package:google_keep_notes/SideMenuBar.dart';
 import 'package:google_keep_notes/colors.dart';
 
@@ -74,20 +75,28 @@ class _ArchiveViewState extends State<ArchiveView> {
                           SizedBox(
                             width: 16,
                           ),
-                          Container(
-                            width: 200,
-                            height: 55,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Search Your Notes",
-                                  style: TextStyle(
-                                      color: white.withOpacity(0.5),
-                                      fontSize: 16),
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchView()));
+                            },
+                            child: Container(
+                              width: 200,
+                              height: 55,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Search Your Notes",
+                                    style: TextStyle(
+                                        color: white.withOpacity(0.5),
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],
