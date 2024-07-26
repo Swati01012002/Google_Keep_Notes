@@ -26,7 +26,6 @@ class NotesDatabase {
       CREATE TABLE Notes(
       ${NotesImpNames.id} $idType,
       ${NotesImpNames.pin} $boolType,
-      ${NotesImpNames.isArchived} $boolType,
       ${NotesImpNames.title} $textType,
       ${NotesImpNames.content} $textType,
       ${NotesImpNames.createdTime} $textType
@@ -74,17 +73,17 @@ class NotesDatabase {
         where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
   }
 
-  Future archNote(Note? note) async {
+  /*Future archNote(Note? note) async {
     final db = await instance.database;
     return await db!.update(NotesImpNames.TableName,
         {NotesImpNames.isArchived: !note!.isArchived ? 1 : 0},
         where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
-  }
+  }*/
 
-  Future deleteNote(Note? note) async {
+  Future deleteNote(Note note) async {
     final db = await instance.database;
     await db!.delete(NotesImpNames.TableName,
-        where: '${NotesImpNames.id} = ?', whereArgs: [note!.id]);
+        where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
   }
 
   Future closeDB() async {

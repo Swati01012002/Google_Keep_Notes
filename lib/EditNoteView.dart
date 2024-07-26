@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes/colors.dart';
 import 'package:google_keep_notes/services/db.dart';
-import 'NoteView.dart';
 import 'home.dart';
 import 'model/MyNoteModel.dart';
 
@@ -41,7 +40,7 @@ class _EditNoteViewState extends State<EditNoteView> {
                     title: NewTitle,
                     createdTime: widget.note!.createdTime,
                     pin: widget.note!.pin,
-                    isArchived: widget.note!.isArchived,
+                    //isArchived: widget.note!.isArchived,
                     id: widget.note!.id);
                 await NotesDatabase.instance.updateNote(newNote);
                 Navigator.pushReplacement(

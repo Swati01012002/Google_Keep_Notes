@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_keep_notes/ArchiveView.dart';
 import 'package:google_keep_notes/Home.dart';
 import 'package:google_keep_notes/Settings.dart';
 import 'package:google_keep_notes/colors.dart';
@@ -36,10 +35,8 @@ class _SideMenuState extends State<SideMenu> {
               SizedBox(
                 height: 5,
               ),
-              sectionTwo(),
-              SizedBox(
-                height: 5,
-              ),
+              //sectionTwo(),
+
               sectionSetting()
             ],
           ),
@@ -86,7 +83,7 @@ class _SideMenuState extends State<SideMenu> {
     );
   }
 
-  Widget sectionTwo() {
+  /*Widget sectionTwo() {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: TextButton(
@@ -120,7 +117,7 @@ class _SideMenuState extends State<SideMenu> {
             ),
           )),
     );
-  }
+  }*/
 
   Widget sectionSetting() {
     return Container(

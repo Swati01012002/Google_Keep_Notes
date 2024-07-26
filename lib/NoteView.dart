@@ -34,7 +34,7 @@ class _NoteViewState extends State<NoteView> {
             icon: Icon(
                 widget.note.pin ? Icons.push_pin : Icons.push_pin_outlined),
           ),
-          IconButton(
+          /*IconButton(
             splashRadius: 17,
             onPressed: () async {
               await NotesDatabase.instance.archNote(widget.note);
@@ -44,7 +44,7 @@ class _NoteViewState extends State<NoteView> {
             icon: Icon(widget.note.isArchived
                 ? Icons.archive
                 : Icons.archive_outlined),
-          ),
+          ),*/
           IconButton(
             splashRadius: 17,
             onPressed: () async {

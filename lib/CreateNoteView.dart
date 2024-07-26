@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:google_keep_notes/Home.dart';
 import 'package:google_keep_notes/colors.dart';
+import 'package:google_keep_notes/model/MyNoteModel.dart';
+import 'package:google_keep_notes/services/db.dart';
 
 class CreateNoteView extends StatefulWidget {
-  const CreateNoteView({Key? key}) : super(key: key);
+  const CreateNoteView({super.key});
 
   @override
-  _CreateNoteViewState createState() => _CreateNoteViewState();
+  State<CreateNoteView> createState() => _CreateNoteViewState();
 }
 
 class _CreateNoteViewState extends State<CreateNoteView> {
+  TextEditingController title = new TextEditingController();
+  TextEditingController content = new TextEditingController();
+
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    title.dispose();
+    content.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: white),
         backgroundColor: bgColor,
         elevation: 0.0,
         actions: [
           IconButton(
               splashRadius: 17,
-              onPressed: () {},
+              onPressed: () async {
+                await NotesDatabase.instance.InsertEntry(Note(
+                    pin: false,
+                    //isArchived: false,
+                    title: title.text,
+                    content: content.text,
+                    createdTime: DateTime.now()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              },
               icon: Icon(Icons.save_outlined))
         ],
       ),
@@ -29,10 +52,9 @@ class _CreateNoteViewState extends State<CreateNoteView> {
           children: [
             TextField(
               cursorColor: white,
+              controller: title,
               style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+                  fontSize: 25, color: white, fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -45,25 +67,25 @@ class _CreateNoteViewState extends State<CreateNoteView> {
                       color: Colors.grey.withOpacity(0.8))),
             ),
             Container(
-              height: 300,
-              child: TextField(
-                cursorColor: white,
-                keyboardType: TextInputType.multiline,
-                minLines: 50,
-                maxLines: null,
-                style: TextStyle(fontSize: 17, color: Colors.white),
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    hintText: "Note",
-                    hintStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.withOpacity(0.8))),
-              ),
-            )
+                height: 300,
+                child: TextField(
+                  controller: content,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 50,
+                  maxLines: null,
+                  cursorColor: white,
+                  style: TextStyle(fontSize: 17, color: white),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintText: "Note",
+                      hintStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.withOpacity(0.8))),
+                ))
           ],
         ),
       ),
