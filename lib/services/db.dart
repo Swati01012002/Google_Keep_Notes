@@ -26,6 +26,7 @@ class NotesDatabase {
       CREATE TABLE Notes(
       ${NotesImpNames.id} $idType,
       ${NotesImpNames.pin} $boolType,
+      ${NotesImpNames.isArchived} $boolType,
       ${NotesImpNames.title} $textType,
       ${NotesImpNames.content} $textType,
       ${NotesImpNames.createdTime} $textType
@@ -66,14 +67,41 @@ class NotesDatabase {
         where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
   }
 
-  Future deleteNote(Note note) async {
+  Future pinNote(Note? note) async {
+    final db = await instance.database;
+    return await db!.update(
+        NotesImpNames.TableName, {NotesImpNames.pin: !note!.pin ? 1 : 0},
+        where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
+  }
+
+  Future archNote(Note? note) async {
+    final db = await instance.database;
+    return await db!.update(NotesImpNames.TableName,
+        {NotesImpNames.isArchived: !note!.isArchived ? 1 : 0},
+        where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
+  }
+
+  Future deleteNote(Note? note) async {
     final db = await instance.database;
     await db!.delete(NotesImpNames.TableName,
-        where: '${NotesImpNames.id} = ?', whereArgs: [note.id]);
+        where: '${NotesImpNames.id} = ?', whereArgs: [note!.id]);
   }
 
   Future closeDB() async {
     final db = await instance.database;
     db!.close();
+  }
+
+  Future<List<int>> getNoteString(String query) async {
+    final db = await instance.database;
+    final result = await db!.query(NotesImpNames.TableName);
+    List<int> resultIds = [];
+    result.forEach((element) {
+      if (element["title"].toString().toLowerCase().contains(query) ||
+          element["content"].toString().toLowerCase().contains(query)) {
+        resultIds.add(element["id"] as int);
+      }
+    });
+    return resultIds;
   }
 }

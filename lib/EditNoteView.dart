@@ -1,26 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes/colors.dart';
+import 'package:google_keep_notes/services/db.dart';
+import 'NoteView.dart';
+import 'home.dart';
+import 'model/MyNoteModel.dart';
 
 class EditNoteView extends StatefulWidget {
-  const EditNoteView({super.key});
+  Note? note;
+  EditNoteView({required this.note});
 
   @override
-  State<EditNoteView> createState() => _EditNoteViewState();
+  _EditNoteViewState createState() => _EditNoteViewState();
 }
 
 class _EditNoteViewState extends State<EditNoteView> {
+  late String NewTitle;
+  late String NewNoteDet;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.NewTitle = widget.note!.title.toString();
+    this.NewNoteDet = widget.note!.content.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: white),
         backgroundColor: bgColor,
         elevation: 0.0,
         actions: [
           IconButton(
               splashRadius: 17,
-              onPressed: () {},
+              onPressed: () async {
+                Note newNote = Note(
+                    content: NewNoteDet,
+                    title: NewTitle,
+                    createdTime: widget.note!.createdTime,
+                    pin: widget.note!.pin,
+                    isArchived: widget.note!.isArchived,
+                    id: widget.note!.id);
+                await NotesDatabase.instance.updateNote(newNote);
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              },
               icon: Icon(Icons.save_outlined))
         ],
       ),
@@ -28,39 +54,53 @@ class _EditNoteViewState extends State<EditNoteView> {
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(
           children: [
-            TextField(
-              cursorColor: white,
-              style: TextStyle(
-                  fontSize: 25, color: white, fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  hintText: "Title",
-                  hintStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.withOpacity(0.8))),
+            Form(
+              child: TextFormField(
+                initialValue: NewTitle,
+                cursorColor: white,
+                onChanged: (value) {
+                  NewTitle = value;
+                },
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    hintText: "Title",
+                    hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.withOpacity(0.8))),
+              ),
             ),
             Container(
                 height: 300,
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  minLines: 50,
-                  maxLines: null,
-                  cursorColor: white,
-                  style: TextStyle(fontSize: 17, color: white),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: "Note",
-                      hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.withOpacity(0.8))),
+                child: Form(
+                  child: TextFormField(
+                    onChanged: (value) {
+                      NewNoteDet = value;
+                    },
+                    initialValue: NewNoteDet,
+                    cursorColor: white,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 50,
+                    maxLines: null,
+                    style: TextStyle(fontSize: 17, color: Colors.white),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: "Note",
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.withOpacity(0.8))),
+                  ),
                 ))
           ],
         ),

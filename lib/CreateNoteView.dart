@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_keep_notes/colors.dart';
 
 class CreateNoteView extends StatefulWidget {
-  const CreateNoteView({super.key});
+  const CreateNoteView({Key? key}) : super(key: key);
 
   @override
-  State<CreateNoteView> createState() => _CreateNoteViewState();
+  _CreateNoteViewState createState() => _CreateNoteViewState();
 }
 
 class _CreateNoteViewState extends State<CreateNoteView> {
@@ -14,7 +14,6 @@ class _CreateNoteViewState extends State<CreateNoteView> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: white),
         backgroundColor: bgColor,
         elevation: 0.0,
         actions: [
@@ -31,7 +30,9 @@ class _CreateNoteViewState extends State<CreateNoteView> {
             TextField(
               cursorColor: white,
               style: TextStyle(
-                  fontSize: 25, color: white, fontWeight: FontWeight.bold),
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -44,24 +45,25 @@ class _CreateNoteViewState extends State<CreateNoteView> {
                       color: Colors.grey.withOpacity(0.8))),
             ),
             Container(
-                height: 300,
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  minLines: 50,
-                  maxLines: null,
-                  cursorColor: white,
-                  style: TextStyle(fontSize: 17, color: white),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: "Note",
-                      hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.withOpacity(0.8))),
-                ))
+              height: 300,
+              child: TextField(
+                cursorColor: white,
+                keyboardType: TextInputType.multiline,
+                minLines: 50,
+                maxLines: null,
+                style: TextStyle(fontSize: 17, color: Colors.white),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    hintText: "Note",
+                    hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.withOpacity(0.8))),
+              ),
+            )
           ],
         ),
       ),

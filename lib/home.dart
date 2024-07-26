@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     createEntry(Note(
+        isArchived: false,
         pin: false,
         title: "CODE",
         content: "THIS IS THE CONTENT",
@@ -229,7 +230,8 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NoteView()));
+                                builder: (context) =>
+                                    NoteView(note: notesList[index])));
                       },
                       child: Container(
                         padding: EdgeInsets.all(10),

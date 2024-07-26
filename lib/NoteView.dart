@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_keep_notes/EditNoteView.dart';
 import 'package:google_keep_notes/Colors.dart';
+import 'package:google_keep_notes/Home.dart';
+import 'package:google_keep_notes/model/MyNoteModel.dart';
+import 'package:google_keep_notes/services/db.dart';
 
+// ignore: must_be_immutable
 class NoteView extends StatefulWidget {
-  const NoteView({super.key});
+  Note note;
+  NoteView({required this.note});
 
   @override
   State<NoteView> createState() => _NoteViewState();
 }
 
 class _NoteViewState extends State<NoteView> {
-  String note =
-      "THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE THIS IS A NOTE ";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,19 +26,41 @@ class _NoteViewState extends State<NoteView> {
         actions: [
           IconButton(
             splashRadius: 17,
-            onPressed: () {},
-            icon: Icon(Icons.push_pin_outlined),
+            onPressed: () async {
+              await NotesDatabase.instance.pinNote(widget.note);
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+            icon: Icon(
+                widget.note.pin ? Icons.push_pin : Icons.push_pin_outlined),
           ),
           IconButton(
             splashRadius: 17,
-            onPressed: () {},
-            icon: Icon(Icons.archive_outlined),
+            onPressed: () async {
+              await NotesDatabase.instance.archNote(widget.note);
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+            icon: Icon(widget.note.isArchived
+                ? Icons.archive
+                : Icons.archive_outlined),
+          ),
+          IconButton(
+            splashRadius: 17,
+            onPressed: () async {
+              await NotesDatabase.instance.deleteNote(widget.note);
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+            icon: Icon(Icons.delete_forever_outlined),
           ),
           IconButton(
             splashRadius: 17,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditNoteView()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditNoteView(note: widget.note)));
             },
             icon: Icon(Icons.edit_outlined),
           )
@@ -47,7 +72,7 @@ class _NoteViewState extends State<NoteView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "HEADING",
+              widget.note.title,
               style: TextStyle(
                   color: white, fontSize: 23, fontWeight: FontWeight.bold),
             ),
@@ -55,7 +80,7 @@ class _NoteViewState extends State<NoteView> {
               height: 10,
             ),
             Text(
-              note,
+              widget.note.content,
               style: TextStyle(color: white),
             )
           ],
